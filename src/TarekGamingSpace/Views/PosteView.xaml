@@ -59,7 +59,8 @@
 
                 <!-- price + status -->
                 <DockPanel>
-                    <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" DockPanel.Dock="Left"
+                    <!-- Follows the language direction: "180 DZD" in English, "180 دج" read right-to-left in Arabic. -->
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Left"
                                 x:Name="MoneyPanel" VerticalAlignment="Bottom">
                         <TextBlock Text="{Binding MoneyText}" FontFamily="{DynamicResource DigitsFont}" FontSize="19"
                                    Foreground="{StaticResource TextBrush}"/>
