@@ -4,6 +4,20 @@ A floating timer strip for a gaming room. Each poste (console seat) gets its own
 
 Runs on Windows 10 and 11, 32-bit and 64-bit (.NET Framework 4.8, which Windows 10 already includes).
 
+## Download
+
+**[⬇ Download TarekGamingSpace-Setup.exe](https://github.com/yahiaslimani/tarek-gaming-space/releases/latest/download/TarekGamingSpace-Setup.exe)** (latest version, about 2 MB)
+
+All versions and change notes are on the [Releases page](https://github.com/yahiaslimani/tarek-gaming-space/releases).
+
+### Install
+
+1. Run `TarekGamingSpace-Setup.exe`. No admin rights are needed.
+2. If Windows shows "Windows protected your PC", click **More info → Run anyway**. The app isn't code-signed, so Windows doesn't recognise it yet.
+3. Finish the setup. The strip appears at the top right of the screen, and the app starts with Windows from then on.
+
+To update, run the new setup over the old one. Settings and running sessions are kept. To uninstall, use Windows Settings → Apps.
+
 ## Features
 
 - One always-on-top strip with 1–5 postes. Poste 1 sits on the right and new postes attach on the left. Drag the name bar to move the strip.
