@@ -86,7 +86,8 @@ namespace TarekGamingSpace.ViewModels
             foreach (var p in Postes) p.Refresh(now);
         }
 
-        void UpdateSound() => _sound.SetAlert(Postes.Any(p => p.IsAlerting), Settings.Sound);
+        void UpdateSound() =>
+            _sound.SetAlert(Settings.SoundEnabled && Postes.Any(p => p.IsAlerting), Settings.Sound);
 
         // ---------- session actions ----------
 
@@ -236,6 +237,18 @@ namespace TarekGamingSpace.ViewModels
             {
                 if (value == null || value == Settings.Sound) return;
                 Settings.Sound = value;
+                Raise();
+                Save();
+                UpdateSound();
+            }
+        }
+
+        public bool SoundEnabled
+        {
+            get => Settings.SoundEnabled;
+            set
+            {
+                Settings.SoundEnabled = value;
                 Raise();
                 Save();
                 UpdateSound();

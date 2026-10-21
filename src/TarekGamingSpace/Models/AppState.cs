@@ -40,6 +40,8 @@ namespace TarekGamingSpace.Models
         [DataMember] public bool RunAtStartup { get; set; }
         [DataMember] public int WarningMinutes { get; set; }
         [DataMember] public string Sound { get; set; }
+        /// <summary>Off = the poste still blinks red and Windows still notifies, but nothing plays.</summary>
+        [DataMember] public bool SoundEnabled { get; set; }
         [DataMember] public double Opacity { get; set; }
         [DataMember] public bool AlwaysOnTop { get; set; }
         [DataMember] public bool Locked { get; set; }
@@ -60,6 +62,7 @@ namespace TarekGamingSpace.Models
             RunAtStartup = true;
             WarningMinutes = 5;
             Sound = "Chime";
+            SoundEnabled = true;
             Opacity = 1.0;
             AlwaysOnTop = true;
             Locked = false;

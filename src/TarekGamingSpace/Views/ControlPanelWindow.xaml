@@ -13,6 +13,13 @@
             <Setter Property="Margin" Value="0,0,0,12"/>
             <Setter Property="LastChildFill" Value="False"/>
         </Style>
+        <Style x:Key="DimmableRow" TargetType="DockPanel" BasedOn="{StaticResource Row}">
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.4"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
     <Border Background="{StaticResource SurfaceBrush}" BorderBrush="{StaticResource LineBrush}" BorderThickness="1" CornerRadius="10">
@@ -122,6 +129,15 @@
                     </DockPanel>
 
                     <DockPanel Style="{StaticResource Row}">
+                        <StackPanel>
+                            <TextBlock Text="{Binding [SoundOn], Source={x:Static core:Loc.I}}" Style="{StaticResource Label}"/>
+                            <TextBlock Text="{Binding [SoundOnHint], Source={x:Static core:Loc.I}}" Style="{StaticResource Muted}"/>
+                        </StackPanel>
+                        <CheckBox Style="{StaticResource Switch}" DockPanel.Dock="Right" IsChecked="{Binding SoundEnabled}"
+                                  AutomationProperties.Name="{Binding [SoundOn], Source={x:Static core:Loc.I}}"/>
+                    </DockPanel>
+
+                    <DockPanel Style="{StaticResource DimmableRow}" IsEnabled="{Binding SoundEnabled}">
                         <TextBlock Text="{Binding [Sound], Source={x:Static core:Loc.I}}" Style="{StaticResource Label}"/>
                         <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
                             <RadioButton Style="{StaticResource Choice}" GroupName="snd" Margin="0,0,4,0" Padding="9,6"
