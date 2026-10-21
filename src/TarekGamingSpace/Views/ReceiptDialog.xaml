@@ -1,0 +1,65 @@
+<Window x:Class="TarekGamingSpace.Views.ReceiptDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:core="clr-namespace:TarekGamingSpace.Core"
+        Title="Tarek Gaming Space" Width="380" SizeToContent="Height"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent" ResizeMode="NoResize"
+        ShowInTaskbar="False" Topmost="True" WindowStartupLocation="CenterScreen" UseLayoutRounding="True"
+        FontFamily="{DynamicResource BodyFont}" Foreground="{StaticResource TextBrush}"
+        FlowDirection="{Binding Flow, Source={x:Static core:Loc.I}}">
+    <Window.Resources>
+        <Style x:Key="Key" TargetType="TextBlock" BasedOn="{StaticResource Label}">
+            <Setter Property="Foreground" Value="{StaticResource MutedBrush}"/>
+            <Setter Property="Margin" Value="0,4"/>
+        </Style>
+        <Style x:Key="Val" TargetType="TextBlock" BasedOn="{StaticResource Label}">
+            <Setter Property="FontFamily" Value="{DynamicResource DigitsFont}"/>
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="0,4"/>
+        </Style>
+    </Window.Resources>
+    <Border Background="{StaticResource SurfaceBrush}" BorderBrush="{StaticResource LineBrush}" BorderThickness="1"
+            CornerRadius="12" Padding="18" MouseLeftButtonDown="Border_MouseLeftButtonDown">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <ContentPresenter ContentTemplate="{StaticResource Logo}" Width="16" Height="16"/>
+                <TextBlock Text="TAREK" Margin="6,0,0,0" FontFamily="{DynamicResource DisplayFont}" FontWeight="Bold"
+                           FontSize="11" VerticalAlignment="Center" FlowDirection="LeftToRight"/>
+                <TextBlock Text="{Binding [BrandSub], Source={x:Static core:Loc.I}}" Margin="6,0,0,0" FontSize="10.5"
+                           FontFamily="{DynamicResource DisplayFont}" FontWeight="SemiBold"
+                           Foreground="{StaticResource XboxBrush}" VerticalAlignment="Center"/>
+            </StackPanel>
+            <TextBlock x:Name="TitleText" Style="{StaticResource H3}" Margin="0,8,0,10" TextTrimming="CharacterEllipsis"/>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="ModeKey" Style="{StaticResource Key}"/>
+                <TextBlock x:Name="ModeVal" Grid.Column="1" Style="{StaticResource Val}" FontFamily="{DynamicResource BodyFont}" FontSize="14"/>
+                <TextBlock x:Name="PlayedKey" Grid.Row="1" Style="{StaticResource Key}"/>
+                <TextBlock x:Name="PlayedVal" Grid.Row="1" Grid.Column="1" Style="{StaticResource Val}"/>
+                <TextBlock x:Name="RateKey" Grid.Row="2" Style="{StaticResource Key}"/>
+                <TextBlock x:Name="RateVal" Grid.Row="2" Grid.Column="1" Style="{StaticResource Val}"/>
+                <Border Grid.Row="3" Grid.ColumnSpan="2" BorderBrush="{StaticResource LineBrush}" BorderThickness="0,1,0,0"
+                        Margin="0,8,0,0" Padding="0,10,0,0">
+                    <DockPanel>
+                        <TextBlock x:Name="TotalKey" Style="{StaticResource Label}" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="TotalVal" HorizontalAlignment="Right" FontFamily="{DynamicResource DigitsFont}"
+                                   FontSize="32" Foreground="{StaticResource XboxBrush}"/>
+                    </DockPanel>
+                </Border>
+            </Grid>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,18,0,0">
+                <Button x:Name="CancelBtn" Style="{StaticResource Btn}" IsCancel="True" Margin="0,0,8,0" Click="CancelBtn_Click"/>
+                <Button x:Name="DoneBtn" Style="{StaticResource BtnPrimary}" IsDefault="True" Click="DoneBtn_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>

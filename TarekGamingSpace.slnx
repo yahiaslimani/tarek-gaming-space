@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/TarekGamingSpace/TarekGamingSpace.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/TarekGamingSpace.Tests/TarekGamingSpace.Tests.csproj" />
+  </Folder>
+</Solution>
