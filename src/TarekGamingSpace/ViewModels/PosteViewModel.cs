@@ -125,8 +125,8 @@ namespace TarekGamingSpace.ViewModels
 
                 if (st == PosteState.Paused) SubText = L["Paused"];
                 else if (st == PosteState.Ended) SubText = S.Acknowledged ? L["TimeUp"] : L["ClickToSilence"];
-                else if (timer) SubText = $"{L.HoursMinutes(remaining + 59)} {L["Left"]}";
-                else SubText = $"{L.HoursMinutes(played)} {L["Played"]}";
+                else if (timer) SubText = L.Format("LeftFmt", L.HoursMinutes(remaining + 59));
+                else SubText = L.Format("PlayedFmt", L.HoursMinutes(played));
 
                 if (st == PosteState.Paused) Visual = "Paused";
                 else if (st == PosteState.Ended) Visual = S.Acknowledged ? "Ack" : "Ended";

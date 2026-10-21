@@ -34,14 +34,16 @@ namespace TarekGamingSpace
             base.OnStartup(e);
 
             // Only one copy: a second launch asks the first one to show its control panel, then quits.
-            _mutex = new Mutex(true, MutexName, out bool firstInstance);
+            // A development run with its own data folder (TGS_DATA_DIR) counts as a separate copy.
+            string suffix = string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TGS_DATA_DIR")) ? "" : "_Dev";
+            _mutex = new Mutex(true, MutexName + suffix, out bool firstInstance);
             if (!firstInstance)
             {
-                try { EventWaitHandle.OpenExisting(ShowPanelEventName).Set(); } catch { }
+                try { EventWaitHandle.OpenExisting(ShowPanelEventName + suffix).Set(); } catch { }
                 Shutdown();
                 return;
             }
-            _showPanelEvent = new EventWaitHandle(false, EventResetMode.AutoReset, ShowPanelEventName);
+            _showPanelEvent = new EventWaitHandle(false, EventResetMode.AutoReset, ShowPanelEventName + suffix);
             new Thread(() =>
             {
                 while (_showPanelEvent.WaitOne())
