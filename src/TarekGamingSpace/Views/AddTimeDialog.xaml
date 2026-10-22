@@ -1,0 +1,31 @@
+<Window x:Class="TarekGamingSpace.Views.AddTimeDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:core="clr-namespace:TarekGamingSpace.Core"
+        Title="Tarek Gaming Space" Width="380" SizeToContent="Height"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent" ResizeMode="NoResize"
+        ShowInTaskbar="False" Topmost="True" WindowStartupLocation="CenterScreen" UseLayoutRounding="True"
+        FontFamily="{DynamicResource BodyFont}" Foreground="{StaticResource TextBrush}"
+        FlowDirection="{Binding Flow, Source={x:Static core:Loc.I}}">
+    <Border Background="{StaticResource SurfaceBrush}" BorderBrush="{StaticResource LineBrush}" BorderThickness="1"
+            CornerRadius="12" Padding="18" MouseLeftButtonDown="Border_MouseLeftButtonDown">
+        <StackPanel>
+            <TextBlock x:Name="TitleText" Style="{StaticResource H3}" TextTrimming="CharacterEllipsis"/>
+            <TextBlock x:Name="NowText" Style="{StaticResource Muted}" FontSize="13" Margin="0,6,0,0"/>
+
+            <UniformGrid x:Name="Presets" Columns="3" Margin="0,14,0,0"/>
+            <DockPanel Margin="0,10,0,0">
+                <TextBlock x:Name="CustomLabel" Style="{StaticResource Label}" FontSize="13" DockPanel.Dock="Left"/>
+                <TextBox x:Name="CustomBox" Style="{StaticResource NumberInput}" Margin="10,0,8,0" DockPanel.Dock="Left"
+                         MaxLength="3" TextChanged="CustomBox_TextChanged" PreviewTextInput="CustomBox_PreviewTextInput"/>
+                <TextBlock x:Name="MinLabel" Style="{StaticResource Label}" FontSize="13" DockPanel.Dock="Left"/>
+            </DockPanel>
+            <TextBlock x:Name="EstimateText" Style="{StaticResource Muted}" FontSize="13" Margin="0,10,0,0"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,18,0,0">
+                <Button x:Name="CancelBtn" Style="{StaticResource Btn}" IsCancel="True" Margin="0,0,8,0" Click="CancelBtn_Click"/>
+                <Button x:Name="GoBtn" Style="{StaticResource BtnPrimary}" IsDefault="True" Click="GoBtn_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>

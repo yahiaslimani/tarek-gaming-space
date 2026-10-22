@@ -52,6 +52,8 @@ namespace TarekGamingSpace.ViewModels
 
         /// <summary>Shows the start dialog (switching = Open → Timer). Returns null when cancelled.</summary>
         public Func<PosteViewModel, bool, StartChoice> AskStart { get; set; }
+        /// <summary>Asks how many minutes to add to a timer. Returns null when cancelled.</summary>
+        public Func<PosteViewModel, int?> AskAddTime { get; set; }
         /// <summary>Shows the receipt. Returns true when the poste should be freed.</summary>
         public Func<PosteViewModel, bool> ConfirmStop { get; set; }
 
@@ -136,6 +138,14 @@ namespace TarekGamingSpace.ViewModels
             if (choice == null || p.Data.Session == null) return;
             SessionMath.SetTimer(p.Data.Session, choice.Minutes, choice.FromStart, Now);
             Commit(p);
+        }
+
+        public void AddTime(PosteViewModel p)
+        {
+            if (p.Data.Session == null || !p.IsTimer) return;
+            int? minutes = WithDialog(() => AskAddTime?.Invoke(p));
+            if (minutes == null || minutes <= 0) return;
+            Mutate(p, (s, now) => SessionMath.AddMinutes(s, minutes.Value, now));
         }
 
         public void Stop(PosteViewModel p)

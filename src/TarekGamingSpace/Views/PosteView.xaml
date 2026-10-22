@@ -12,8 +12,8 @@
                       Visibility="{Binding CanPause, Converter={StaticResource BoolToVis}}"/>
             <MenuItem Header="{Binding [Resume], Source={x:Static core:Loc.I}}" Command="{Binding ResumeCommand}"
                       Visibility="{Binding CanResume, Converter={StaticResource BoolToVis}}"/>
-            <MenuItem Header="{Binding [Add15], Source={x:Static core:Loc.I}}" Command="{Binding Add15Command}"
-                      Visibility="{Binding CanAdd15, Converter={StaticResource BoolToVis}}"/>
+            <MenuItem Header="{Binding [AddTimeMenu], Source={x:Static core:Loc.I}}" Command="{Binding AddTimeCommand}"
+                      Visibility="{Binding CanAddTime, Converter={StaticResource BoolToVis}}"/>
             <MenuItem Header="{Binding [MakeOpen], Source={x:Static core:Loc.I}}" Command="{Binding MakeOpenCommand}"
                       Visibility="{Binding CanMakeOpen, Converter={StaticResource BoolToVis}}"/>
             <MenuItem Header="{Binding [SetTimer], Source={x:Static core:Loc.I}}" Command="{Binding SetTimerCommand}"
@@ -119,9 +119,10 @@
                         ToolTip="{Binding [Pause], Source={x:Static core:Loc.I}}" AutomationProperties.Name="{Binding [Pause], Source={x:Static core:Loc.I}}">
                     <Path Data="{StaticResource PauseIcon}" Fill="{StaticResource TextBrush}" Width="12" Height="12" Stretch="Uniform"/>
                 </Button>
-                <Button Style="{StaticResource IconBtn}" Command="{Binding Add15Command}" Content="+15"
-                        Visibility="{Binding CanAdd15, Converter={StaticResource BoolToVis}}"
-                        ToolTip="{Binding [Add15], Source={x:Static core:Loc.I}}" AutomationProperties.Name="{Binding [Add15], Source={x:Static core:Loc.I}}"/>
+                <Button Style="{StaticResource IconBtn}" Command="{Binding AddTimeCommand}"
+                        Content="{Binding [AddShort], Source={x:Static core:Loc.I}}"
+                        Visibility="{Binding CanAddTime, Converter={StaticResource BoolToVis}}"
+                        ToolTip="{Binding [AddTime], Source={x:Static core:Loc.I}}" AutomationProperties.Name="{Binding [AddTime], Source={x:Static core:Loc.I}}"/>
                 <Button Style="{StaticResource IconBtn}" Command="{Binding MakeOpenCommand}" Content="∞" FontSize="15"
                         Visibility="{Binding CanMakeOpen, Converter={StaticResource BoolToVis}}"
                         ToolTip="{Binding [MakeOpen], Source={x:Static core:Loc.I}}" AutomationProperties.Name="{Binding [MakeOpen], Source={x:Static core:Loc.I}}"/>

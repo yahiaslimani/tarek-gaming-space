@@ -18,7 +18,7 @@ namespace TarekGamingSpace.ViewModels
             StartCommand = new RelayCommand(() => _main.StartSession(this));
             PauseCommand = new RelayCommand(() => _main.Mutate(this, SessionMath.Pause));
             ResumeCommand = new RelayCommand(() => _main.Mutate(this, SessionMath.Resume));
-            Add15Command = new RelayCommand(() => _main.Mutate(this, (s, now) => SessionMath.AddMinutes(s, 15, now)));
+            AddTimeCommand = new RelayCommand(() => _main.AddTime(this));
             MakeOpenCommand = new RelayCommand(() => _main.Mutate(this, SessionMath.MakeOpen));
             SetTimerCommand = new RelayCommand(() => _main.SetTimer(this));
             StopCommand = new RelayCommand(() => _main.Stop(this));
@@ -33,7 +33,7 @@ namespace TarekGamingSpace.ViewModels
         public ICommand StartCommand { get; }
         public ICommand PauseCommand { get; }
         public ICommand ResumeCommand { get; }
-        public ICommand Add15Command { get; }
+        public ICommand AddTimeCommand { get; }
         public ICommand MakeOpenCommand { get; }
         public ICommand SetTimerCommand { get; }
         public ICommand StopCommand { get; }
@@ -72,7 +72,7 @@ namespace TarekGamingSpace.ViewModels
         // ---- display state, recomputed on every tick ----
         string _timeText, _chipText, _moneyText, _subText, _visual, _lastName;
         double _progress;
-        bool _solidBackground, _canStart, _canPause, _canResume, _canAdd15, _canMakeOpen, _canSetTimer, _canStop, _showProgress, _isIdleShown;
+        bool _solidBackground, _canStart, _canPause, _canResume, _canAddTime, _canMakeOpen, _canSetTimer, _canStop, _showProgress, _isIdleShown;
 
         public string TimeText { get => _timeText; private set => Set(ref _timeText, value); }
         public string ChipText { get => _chipText; private set => Set(ref _chipText, value); }
@@ -86,7 +86,7 @@ namespace TarekGamingSpace.ViewModels
         public bool CanStart { get => _canStart; private set => Set(ref _canStart, value); }
         public bool CanPause { get => _canPause; private set => Set(ref _canPause, value); }
         public bool CanResume { get => _canResume; private set => Set(ref _canResume, value); }
-        public bool CanAdd15 { get => _canAdd15; private set => Set(ref _canAdd15, value); }
+        public bool CanAddTime { get => _canAddTime; private set => Set(ref _canAddTime, value); }
         public bool CanMakeOpen { get => _canMakeOpen; private set => Set(ref _canMakeOpen, value); }
         public bool CanSetTimer { get => _canSetTimer; private set => Set(ref _canSetTimer, value); }
         public bool CanStop { get => _canStop; private set => Set(ref _canStop, value); }
@@ -142,8 +142,8 @@ namespace TarekGamingSpace.ViewModels
             CanStart = st == PosteState.Idle;
             CanPause = st == PosteState.Running;
             CanResume = st == PosteState.Paused;
-            CanAdd15 = IsTimer && (st == PosteState.Running || st == PosteState.Ended);
-            CanMakeOpen = CanAdd15;
+            CanAddTime = IsTimer && (st == PosteState.Running || st == PosteState.Ended);
+            CanMakeOpen = CanAddTime;
             CanSetTimer = !IsTimer && st == PosteState.Running;
             CanStop = st != PosteState.Idle;
             ShowProgress = IsTimer;

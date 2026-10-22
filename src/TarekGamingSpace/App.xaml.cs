@@ -66,6 +66,7 @@ namespace TarekGamingSpace
             _vm = new MainViewModel(state, _sound)
             {
                 AskStart = AskStart,
+                AskAddTime = AskAddTime,
                 ConfirmStop = ConfirmStop,
             };
             _vm.TimeUp += p => _tray.Notify(Loc.I["AppName"], Loc.I.Format("ToastTimeUp", p.DisplayName));
@@ -123,6 +124,13 @@ namespace TarekGamingSpace
             double played = p.Data.Session == null ? 0 : SessionMath.Played(p.Data.Session, DateTime.UtcNow);
             var dlg = new StartDialog(p, switching, played, _vm.Settings.HourlyRate);
             return dlg.ShowDialog() == true ? dlg.Result : null;
+        }
+
+        int? AskAddTime(PosteViewModel p)
+        {
+            var s = p.Data.Session;
+            var dlg = new AddTimeDialog(p, s.BookedSeconds, SessionMath.Played(s, DateTime.UtcNow), _vm.Settings.HourlyRate);
+            return dlg.ShowDialog() == true ? dlg.Minutes : (int?)null;
         }
 
         bool ConfirmStop(PosteViewModel p)
