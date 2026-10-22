@@ -231,5 +231,7 @@
 
     <Geometry x:Key="PlayIcon">M4,2.5 L4,13.5 L13,8 Z</Geometry>
     <Geometry x:Key="PauseIcon">M4,2.5 L7,2.5 L7,13.5 L4,13.5 Z M9,2.5 L12,2.5 L12,13.5 L9,13.5 Z</Geometry>
+    <!-- ring with the right half filled (even-odd: outer, inner hole, half disc) -->
+    <Geometry x:Key="HalfCircleIcon">F0 M8,1.5 A6.5,6.5 0 1 1 8,14.5 A6.5,6.5 0 1 1 8,1.5 Z M8,2.9 A5.1,5.1 0 1 1 8,13.1 A5.1,5.1 0 1 1 8,2.9 Z M8,2.9 A5.1,5.1 0 0 1 8,13.1 Z</Geometry>
     <Geometry x:Key="StopIcon">M3.5,3.5 L12.5,3.5 L12.5,12.5 L3.5,12.5 Z</Geometry>
 </ResourceDictionary>

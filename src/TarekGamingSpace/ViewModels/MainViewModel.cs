@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Input;
 using TarekGamingSpace.Core;
@@ -78,12 +79,14 @@ namespace TarekGamingSpace.ViewModels
             if (ended) Save();
             foreach (var p in Postes) p.Refresh(now);
             UpdateSound();
+            UpdateFade();
         }
 
         void RefreshAll()
         {
             var now = Now;
             foreach (var p in Postes) p.Refresh(now);
+            UpdateFade();
         }
 
         void UpdateSound() =>
@@ -96,6 +99,7 @@ namespace TarekGamingSpace.ViewModels
             Save();
             p.Refresh(Now);
             UpdateSound();
+            UpdateFade();
         }
 
         public void Mutate(PosteViewModel p, Action<SessionData, DateTime> action)
@@ -255,16 +259,84 @@ namespace TarekGamingSpace.ViewModels
             }
         }
 
+        // ---------- opacity ----------
+
         public double StripOpacity
         {
             get => Settings.Opacity;
             set
             {
-                Settings.Opacity = Math.Max(0.4, Math.Min(1, value));
+                double v = StripFade.Clamp(value, Settings.FadeMode);
+                if (v == Settings.Opacity) { Raise(); return; }
+                Settings.Opacity = v;
                 Raise();
+                Raise(nameof(OpacityText));
                 Save();
+                UpdateFade();
             }
         }
+
+        public string OpacityText => Math.Round(Settings.Opacity * 100) + "%";
+        public double MinOpacity => StripFade.Min(Settings.FadeMode);
+
+        public string FadeMode
+        {
+            get => Settings.FadeMode;
+            set
+            {
+                if (value == null || value == Settings.FadeMode) return;
+                Settings.FadeMode = value;
+                Raise();
+                Raise(nameof(MinOpacity));
+                StripOpacity = Settings.Opacity; // "All" has a higher minimum
+                Save();
+                UpdateFade();
+            }
+        }
+
+        public bool SolidOnHover
+        {
+            get => Settings.SolidOnHover;
+            set { Settings.SolidOnHover = value; Raise(); Save(); UpdateFade(); }
+        }
+
+        public bool SolidOnAlert
+        {
+            get => Settings.SolidOnAlert;
+            set { Settings.SolidOnAlert = value; Raise(); Save(); RefreshAll(); }
+        }
+
+        bool _stripHovered;
+        /// <summary>Set by the strip window when the mouse enters or leaves it.</summary>
+        public bool StripHovered
+        {
+            get => _stripHovered;
+            set { if (Set(ref _stripHovered, value)) UpdateFade(); }
+        }
+
+        double _windowOpacity = 1, _backgroundOpacity = 1;
+        public double WindowOpacity { get => _windowOpacity; private set => Set(ref _windowOpacity, value); }
+        public double BackgroundOpacity
+        {
+            get => _backgroundOpacity;
+            private set { if (Set(ref _backgroundOpacity, value)) Raise(nameof(TextShadow)); }
+        }
+        /// <summary>A soft shadow keeps the text readable once the panel behind it is see-through.</summary>
+        public bool TextShadow => BackgroundOpacity < 1;
+
+        void UpdateFade()
+        {
+            var f = StripFade.Compute(Settings.Opacity, Settings.FadeMode, Settings.SolidOnHover, StripHovered,
+                Settings.SolidOnAlert, Postes.Any(p => p.IsAlertVisual));
+            WindowOpacity = f.Window;
+            BackgroundOpacity = f.Background;
+        }
+
+        public ICommand SetOpacityCommand => _setOpacity ?? (_setOpacity = new RelayCommand(
+            o => StripOpacity = Percent(o),
+            o => Percent(o) >= MinOpacity));
+        static double Percent(object o) => double.Parse((string)o, CultureInfo.InvariantCulture) / 100;
+        ICommand _setOpacity;
 
         public bool AlwaysOnTop
         {

@@ -27,6 +27,9 @@
     </UserControl.ContextMenu>
 
     <Grid x:Name="Root" MouseLeftButtonUp="Root_MouseLeftButtonUp">
+        <!-- keeps an orange or red block solid when the strip background is faded -->
+        <Border Background="{StaticResource GroundBrush}"
+                Visibility="{Binding SolidBackground, Converter={StaticResource BoolToVis}}"/>
         <Border x:Name="Card" BorderBrush="#10FFFFFF" BorderThickness="1,0,0,0" Padding="12,11,12,10">
             <StackPanel>
                 <!-- name + mode chip -->

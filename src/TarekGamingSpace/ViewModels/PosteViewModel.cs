@@ -49,6 +49,8 @@ namespace TarekGamingSpace.ViewModels
         public bool IsIdle => S == null;
         public bool IsTimer => S != null && S.Mode == SessionMode.Timer;
         public bool IsAlerting => S != null && S.Ended && !S.Acknowledged;
+        /// <summary>Orange or red: last minutes, or time's up (blinking or silenced).</summary>
+        public bool IsAlertVisual => Visual == "Warn" || Visual == "Ended" || Visual == "Ack";
 
         string DefaultName => $"{Loc.I["Poste"]} {Data.Id}";
         public string DisplayName => string.IsNullOrWhiteSpace(Data.Name) ? DefaultName : Data.Name.Trim();
@@ -70,7 +72,7 @@ namespace TarekGamingSpace.ViewModels
         // ---- display state, recomputed on every tick ----
         string _timeText, _chipText, _moneyText, _subText, _visual, _lastName;
         double _progress;
-        bool _canStart, _canPause, _canResume, _canAdd15, _canMakeOpen, _canSetTimer, _canStop, _showProgress, _isIdleShown;
+        bool _solidBackground, _canStart, _canPause, _canResume, _canAdd15, _canMakeOpen, _canSetTimer, _canStop, _showProgress, _isIdleShown;
 
         public string TimeText { get => _timeText; private set => Set(ref _timeText, value); }
         public string ChipText { get => _chipText; private set => Set(ref _chipText, value); }
@@ -79,6 +81,8 @@ namespace TarekGamingSpace.ViewModels
         /// <summary>Idle, Run, Warn, Paused, Ended (blinking) or Ack (time's up, silenced).</summary>
         public string Visual { get => _visual; private set => Set(ref _visual, value); }
         public double Progress { get => _progress; private set => Set(ref _progress, value); }
+        /// <summary>An alerting block keeps its own dark panel when the strip background is faded.</summary>
+        public bool SolidBackground { get => _solidBackground; private set => Set(ref _solidBackground, value); }
         public bool CanStart { get => _canStart; private set => Set(ref _canStart, value); }
         public bool CanPause { get => _canPause; private set => Set(ref _canPause, value); }
         public bool CanResume { get => _canResume; private set => Set(ref _canResume, value); }
@@ -134,6 +138,7 @@ namespace TarekGamingSpace.ViewModels
                 else Visual = "Run";
             }
 
+            SolidBackground = settings.SolidOnAlert && IsAlertVisual;
             CanStart = st == PosteState.Idle;
             CanPause = st == PosteState.Running;
             CanResume = st == PosteState.Paused;

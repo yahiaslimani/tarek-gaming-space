@@ -159,9 +159,44 @@
 
                     <DockPanel Style="{StaticResource Row}">
                         <TextBlock Text="{Binding [Opacity], Source={x:Static core:Loc.I}}" Style="{StaticResource Label}"/>
-                        <Slider DockPanel.Dock="Right" Width="130" Minimum="0.4" Maximum="1" VerticalAlignment="Center"
-                                SmallChange="0.05" LargeChange="0.1" IsMoveToPointEnabled="True"
-                                Value="{Binding StripOpacity}" Foreground="{StaticResource XboxBrush}"/>
+                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                            <Slider Width="130" Minimum="{Binding MinOpacity}" Maximum="1" VerticalAlignment="Center"
+                                    SmallChange="0.05" LargeChange="0.1" TickFrequency="0.05" IsSnapToTickEnabled="True"
+                                    IsMoveToPointEnabled="True" Value="{Binding StripOpacity}" Foreground="{StaticResource XboxBrush}"
+                                    AutomationProperties.Name="{Binding [Opacity], Source={x:Static core:Loc.I}}"/>
+                            <TextBlock Text="{Binding OpacityText}" Width="44" TextAlignment="Right" FlowDirection="LeftToRight"
+                                       FontFamily="{DynamicResource DigitsFont}" Style="{StaticResource Label}"/>
+                        </StackPanel>
+                    </DockPanel>
+
+                    <DockPanel Style="{StaticResource Row}">
+                        <TextBlock Text="{Binding [FadeWhat], Source={x:Static core:Loc.I}}" Style="{StaticResource Label}"/>
+                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                            <RadioButton Style="{StaticResource Choice}" GroupName="fade" Margin="0,0,4,0" Padding="9,6"
+                                         Content="{Binding [FadeBackground], Source={x:Static core:Loc.I}}"
+                                         IsChecked="{Binding FadeMode, Converter={StaticResource Equals}, ConverterParameter=Background}"/>
+                            <RadioButton Style="{StaticResource Choice}" GroupName="fade" Padding="9,6"
+                                         Content="{Binding [FadeAll], Source={x:Static core:Loc.I}}"
+                                         IsChecked="{Binding FadeMode, Converter={StaticResource Equals}, ConverterParameter=All}"/>
+                        </StackPanel>
+                    </DockPanel>
+
+                    <DockPanel Style="{StaticResource Row}">
+                        <StackPanel>
+                            <TextBlock Text="{Binding [SolidOnHover], Source={x:Static core:Loc.I}}" Style="{StaticResource Label}"/>
+                            <TextBlock Text="{Binding [SolidOnHoverHint], Source={x:Static core:Loc.I}}" Style="{StaticResource Muted}"/>
+                        </StackPanel>
+                        <CheckBox Style="{StaticResource Switch}" DockPanel.Dock="Right" IsChecked="{Binding SolidOnHover}"
+                                  AutomationProperties.Name="{Binding [SolidOnHover], Source={x:Static core:Loc.I}}"/>
+                    </DockPanel>
+
+                    <DockPanel Style="{StaticResource Row}">
+                        <StackPanel>
+                            <TextBlock Text="{Binding [SolidOnAlert], Source={x:Static core:Loc.I}}" Style="{StaticResource Label}"/>
+                            <TextBlock Text="{Binding [SolidOnAlertHint], Source={x:Static core:Loc.I}}" Style="{StaticResource Muted}"/>
+                        </StackPanel>
+                        <CheckBox Style="{StaticResource Switch}" DockPanel.Dock="Right" IsChecked="{Binding SolidOnAlert}"
+                                  AutomationProperties.Name="{Binding [SolidOnAlert], Source={x:Static core:Loc.I}}"/>
                     </DockPanel>
 
                     <DockPanel Style="{StaticResource Row}">

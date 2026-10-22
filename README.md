@@ -24,6 +24,7 @@ To update, run the new setup over the old one. Settings and running sessions are
 - Open or Timer sessions, with pause, +15 min, and switching between modes. Open → Timer can either add the minutes on top of the time played or count them from the start.
 - Price = time played × hourly rate, always rounded down to the previous 10 DZD. Paused time is free, and a client who leaves early pays only for the time played.
 - The block turns orange in the last minutes. When time is up it turns red and blinks, a sound loops until you click the block (the sound can be switched off), and Windows shows a notification.
+- Adjustable opacity from the ◐ button on the strip (20–100%). By default only the dark background fades, so the numbers stay sharp. The strip goes solid under the mouse and when a poste is in its last minutes or out of time.
 - English and Arabic (right-to-left), start with Windows, hide/show from the tray.
 - Sessions are stored as timestamps in `%AppData%\TarekGamingSpace\state.json`, so they continue correctly after a restart or crash.
 

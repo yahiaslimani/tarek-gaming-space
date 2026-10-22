@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
 using TarekGamingSpace.ViewModels;
 
 namespace TarekGamingSpace.Views
@@ -21,6 +22,29 @@ namespace TarekGamingSpace.Views
             Loaded += (s, e) => Place();
             // Keep the right edge fixed: when a poste is added on the left, the strip grows to the left.
             SizeChanged += (s, e) => { if (_placed) Left = _vm.Settings.StripRight - ActualWidth; };
+            // Round the content's corners too, so a solid or red block doesn't poke out of the faded panel.
+            Body.SizeChanged += (s, e) =>
+                Body.Clip = new RectangleGeometry(new Rect(0, 0, Body.ActualWidth, Body.ActualHeight), 9, 9);
+        }
+
+        void Window_MouseEnter(object sender, MouseEventArgs e) => _vm.StripHovered = true;
+        void Window_MouseLeave(object sender, MouseEventArgs e) => _vm.StripHovered = IsMouseOver;
+
+        // Mouse wheel over the opacity button: 5% per notch.
+        void OpacityButton_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            _vm.StripOpacity += e.Delta > 0 ? 0.05 : -0.05;
+            e.Handled = true;
+        }
+
+        void OpacityPopup_Opened(object sender, EventArgs e) => OpacitySlider.Focus();
+        // The popup is its own window; once it closes, the strip goes back to its faded level.
+        void OpacityPopup_Closed(object sender, EventArgs e) => _vm.StripHovered = IsMouseOver;
+
+        void MoreOptions_Click(object sender, RoutedEventArgs e)
+        {
+            OpacityPopup.IsOpen = false;
+            _vm.ShowPanelCommand.Execute(null);
         }
 
         void Place()

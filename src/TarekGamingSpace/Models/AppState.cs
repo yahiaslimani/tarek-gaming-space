@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using TarekGamingSpace.Core;
 
 namespace TarekGamingSpace.Models
 {
@@ -43,6 +44,10 @@ namespace TarekGamingSpace.Models
         /// <summary>Off = the poste still blinks red and Windows still notifies, but nothing plays.</summary>
         [DataMember] public bool SoundEnabled { get; set; }
         [DataMember] public double Opacity { get; set; }
+        /// <summary>"Background" fades only the strip's dark panel; "All" fades the whole strip, text included.</summary>
+        [DataMember] public string FadeMode { get; set; }
+        [DataMember] public bool SolidOnHover { get; set; }
+        [DataMember] public bool SolidOnAlert { get; set; }
         [DataMember] public bool AlwaysOnTop { get; set; }
         [DataMember] public bool Locked { get; set; }
         [DataMember] public bool StripVisible { get; set; }
@@ -64,6 +69,9 @@ namespace TarekGamingSpace.Models
             Sound = "Chime";
             SoundEnabled = true;
             Opacity = 1.0;
+            FadeMode = "Background";
+            SolidOnHover = true;
+            SolidOnAlert = true;
             AlwaysOnTop = true;
             Locked = false;
             StripVisible = true;
@@ -77,7 +85,9 @@ namespace TarekGamingSpace.Models
             if (Language != "ar") Language = "en";
             if (WarningMinutes < 0) WarningMinutes = 0;
             if (Sound != "Alarm" && Sound != "Arcade") Sound = "Chime";
-            if (double.IsNaN(Opacity) || Opacity < 0.4 || Opacity > 1) Opacity = 1.0;
+            if (FadeMode != "All") FadeMode = "Background";
+            if (double.IsNaN(Opacity) || Opacity > 1) Opacity = 1.0;
+            Opacity = StripFade.Clamp(Opacity, FadeMode);
         }
     }
 
