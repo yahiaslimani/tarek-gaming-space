@@ -2,7 +2,7 @@
 
 A floating timer strip for a gaming room. Each poste (console seat) gets its own block on the desktop. A session is either **Open** (stopwatch) or **Timer** (fixed time), and the block shows the price in DZD as the client plays.
 
-Runs on Windows 10 and 11, 32-bit and 64-bit (.NET Framework 4.8, which Windows 10 already includes).
+Runs on Windows 7 SP1, 8, 8.1, 10 and 11, 32-bit and 64-bit (.NET Framework 4.5, which Windows 8 and later already include).
 
 ## Download
 

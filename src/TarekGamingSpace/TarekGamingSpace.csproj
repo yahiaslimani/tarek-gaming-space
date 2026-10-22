@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <!-- .NET Framework 4.8 ships with Windows 10, so nothing extra is needed on old laptops. -->
-    <TargetFramework>net48</TargetFramework>
+    <!-- .NET Framework 4.5 is built into Windows 8/8.1/10/11, so nothing extra is needed on old PCs. -->
+    <TargetFramework>net45</TargetFramework>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <LangVersion>latest</LangVersion>
@@ -13,7 +13,7 @@
     <!-- AnyCPU without Prefer32Bit: runs as 64-bit on x64 Windows and 32-bit on x86 Windows. -->
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <Product>Tarek Gaming Space</Product>
     <Company>Tarek Gaming Space</Company>
     <Copyright>© 2026 Tarek Gaming Space</Copyright>

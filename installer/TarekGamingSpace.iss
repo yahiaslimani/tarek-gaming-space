@@ -19,8 +19,8 @@ DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
 ; Same mutex as the app, so setup asks to close it before updating or uninstalling.
 AppMutex=TarekGamingSpace_SingleInstance
-; Windows 10 1607+ (needed by .NET Framework 4.8). 32- and 64-bit both supported.
-MinVersion=10.0.14393
+; Windows 7 SP1+ (the oldest Windows .NET Framework 4.5 and Inno Setup 6.4 run on). 32- and 64-bit both supported.
+MinVersion=6.1sp1
 OutputDir=Output
 OutputBaseFilename=TarekGamingSpace-Setup-{#AppVersion}
 SetupIconFile=..\src\TarekGamingSpace\Assets\app.ico
@@ -53,13 +53,13 @@ Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: 
 Filename: "{app}\{#AppExe}"; Description: "{cm:LaunchProgram,{#AppName}}"; Flags: nowait postinstall skipifsilent
 
 [Code]
-// .NET Framework 4.8 is built into every updated Windows 10; very old builds may lack it.
-function IsDotNet48Installed(): Boolean;
+// .NET Framework 4.5 or later is built into Windows 8 and up; Windows 7 may lack it.
+function IsDotNet45Installed(): Boolean;
 var
   release: Cardinal;
 begin
   Result := RegQueryDWordValue(HKLM, 'SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full', 'Release', release)
-            and (release >= 528040);
+            and (release >= 378389);
 end;
 
 function InitializeSetup(): Boolean;
@@ -67,9 +67,9 @@ var
   code: Integer;
 begin
   Result := True;
-  if not IsDotNet48Installed() then
+  if not IsDotNet45Installed() then
   begin
-    if MsgBox('This app needs Microsoft .NET Framework 4.8, which is missing on this computer.' + #13#10 +
+    if MsgBox('This app needs Microsoft .NET Framework 4.5 or later, which is missing on this computer.' + #13#10 +
               'Open the download page now? Install it, restart, then run this setup again.',
               mbConfirmation, MB_YESNO) = IDYES then
       ShellExec('open', 'https://dotnet.microsoft.com/download/dotnet-framework/net48', '', '', SW_SHOWNORMAL, ewNoWait, code);
